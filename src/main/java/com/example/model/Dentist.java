@@ -1,9 +1,8 @@
 package com.example.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,14 +21,29 @@ public class Dentist {
     private Long id;
 
     @Column
+    private Long n_documento;
+
+    @Column
+    private String tipo_documento;
+
+    @Column
     private String nombres;
 
     @Column
     private String apellidos;
 
+    @Column
+    private String genero;
+
+    @Column
+    private Long telefono;
+
+    @Column
+    @Email
+    private String correo;
+
+
     @OneToMany(mappedBy = "dentist")
     @JsonIgnore
     private List<Patient> patientList;
-
-
 }

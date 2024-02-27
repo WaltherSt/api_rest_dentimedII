@@ -39,9 +39,24 @@ public class DentistController {
         return new ResponseEntity<>(savedDentist, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteDentist(@PathVariable("id") Long id) {
-        dentistService.deleteDentist(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    @PatchMapping ("/{id}")
+    public ResponseEntity<Dentist> updateDentist (@RequestBody Dentist dentist, @PathVariable Long id) {
+        try {
+            return new ResponseEntity<>(dentistService.updateDentist(dentist, id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteDentist(@PathVariable Long id) {
+        try {
+            dentistService.deleteDentist(id);
+            return new ResponseEntity<>("El Dentista ha sido eliminado", HttpStatus.OK);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }
