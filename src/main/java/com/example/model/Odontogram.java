@@ -18,7 +18,6 @@ public class Odontogram {
     @Column(columnDefinition = "TEXT")
     private String gram;
 
-
     @OneToOne(optional = false)
     @JsonBackReference
     private ClinicalH clinicalH;

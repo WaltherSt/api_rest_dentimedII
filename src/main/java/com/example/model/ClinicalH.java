@@ -28,10 +28,4 @@ public class ClinicalH {
     @JsonIgnore
     private Odontogram odontogram;
 
-
-
-
-
-
-
 }
