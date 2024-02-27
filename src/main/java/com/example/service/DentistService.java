@@ -31,7 +31,4 @@ public class DentistService {
         return dentistRepository.save(dentist);
     }
 
-    public void deleteDentist(Long id) {
-        dentistRepository.deleteById(id);
-    }
 }
