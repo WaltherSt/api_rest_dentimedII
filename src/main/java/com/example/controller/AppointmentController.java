@@ -1,6 +1,5 @@
 package com.example.controller;
 
-
 import com.example.model.Appointment;
 import com.example.service.AppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +26,6 @@ public class AppointmentController {
     public ResponseEntity<Appointment> save(@RequestBody Appointment appointment) {
         Appointment appointmentSaved = appointmentService.save(appointment);
         return new ResponseEntity<>(appointmentSaved, HttpStatus.CREATED);
-
     }
 
     @GetMapping
@@ -37,11 +35,11 @@ public class AppointmentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Appointment>> getById(@PathVariable Long id) {
-        System.out.println(id);
-        Optional<Appointment> appointment = appointmentService.getById(id);
-        System.out.println(appointment);
-        return new ResponseEntity<>(appointment, HttpStatus.FOUND);
+    public ResponseEntity<Object> getById(@PathVariable Long id) {
+        Optional<Appointment> appointmentOptional = appointmentService.getById(id);
+        return appointmentOptional.isPresent()
+                ? new ResponseEntity<>(appointmentOptional, HttpStatus.FOUND)
+                : ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cita no encontrada");
     }
 
     @DeleteMapping("/{id}")
@@ -51,8 +49,8 @@ public class AppointmentController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Appointment>updateById(@PathVariable Long id,@RequestBody Appointment appointment){
-        return new ResponseEntity<>(appointmentService.updateById(id,appointment),HttpStatus.OK);
+    public ResponseEntity<Appointment> updateById(@PathVariable Long id, @RequestBody Appointment appointment) {
+        return new ResponseEntity<>(appointmentService.updateById(id, appointment), HttpStatus.OK);
     }
 
 
