@@ -4,6 +4,7 @@ import com.example.model.Patient;
 import com.example.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,10 +44,15 @@ public class PatientController {
         return new ResponseEntity<>(savedPatient, HttpStatus.CREATED);
     }
 
+    @PatchMapping ("/{id}")
+    public ResponseEntity<Patient> updatePatient (@RequestBody Patient patient, @PathVariable Long id) {
+        return new ResponseEntity<>(patientService.updatePatient(patient, id), HttpStatus.OK);
+    }
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletePatient(@PathVariable("id") Long id) {
+    public ResponseEntity<String> deletePatient(@PathVariable("id") Long id) {
         patientService.deletePatient(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>("El Paciente ha sido eliminado", HttpStatus.OK);
     }
 
 

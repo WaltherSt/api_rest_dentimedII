@@ -2,6 +2,7 @@ package com.example.service;
 
 import com.example.model.Patient;
 import com.example.repository.PatientRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,11 +38,10 @@ public class PatientService {
         patientRepository.deleteById(id);
     }
 
-    public  void updatePatient(Long id, Patient patient){
-       Patient patient1=  patientRepository.getReferenceById(id);
-       patient1.setNombres(patient.getNombres());
-
-
-
+    public Patient updatePatient (Patient user, Long id) {
+        Patient patient = patientRepository.getReferenceById(id);
+        BeanUtils.copyProperties(user,patient,"id");
+        return patientRepository.save(patient);
     }
+
 }
